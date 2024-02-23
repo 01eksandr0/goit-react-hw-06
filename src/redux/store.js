@@ -9,13 +9,15 @@ const persistConfig = {
   version: 1,
   storage,
 };
+const persistedReducer = persistReducer(persistConfig, contactsReducer);
+
 const rootReducer = combineReducers({
-  contacts: contactsReducer,
+  contacts: persistedReducer,
   filters: filterReducer,
 });
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
 });
 
 export const persistor = persistStore(store);

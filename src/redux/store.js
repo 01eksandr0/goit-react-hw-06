@@ -8,16 +8,15 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  whitelist: ["contacts"],
 };
-const persistedReducer = persistReducer(persistConfig, contactsReducer);
-
 const rootReducer = combineReducers({
-  contacts: persistedReducer,
+  contacts: contactsReducer,
   filters: filterReducer,
 });
-
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
 });
 
 export const persistor = persistStore(store);

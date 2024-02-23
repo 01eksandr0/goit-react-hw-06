@@ -14,16 +14,9 @@ const contactsSlice = createSlice({
         return { payload: { name, number, id: nanoid() } };
       },
     },
-    deleteContact: {
-      reducer(state, aciton) {
-        const index = state.findIndex(
-          (contact) => contact.id === aciton.payload
-        );
-        state.splice(index, 1);
-      },
-      prepare(id) {
-        return { payload: id };
-      },
+    deleteContact: (state, action) => {
+      const contactId = action.payload;
+      return state.filter((contact) => contact.id !== contactId);
     },
   },
 });
